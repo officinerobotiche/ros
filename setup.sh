@@ -38,6 +38,7 @@ curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.li
 
 apt-get update
 apt-get install -y nvidia-container-toolkit
+systemctl restart docker
 
 # https://github.com/multiarch/qemu-user-static
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
