@@ -32,13 +32,15 @@ yellow=`tput setaf 3`
 reset=`tput sgr0`
 
 # Install nvidia keys
-distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
-curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+#distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+#curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+#curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
 
-apt-get update
-apt-get install -y nvidia-container-toolkit
-systemctl restart docker
+#apt-get update
+#apt-get install -y nvidia-container-toolkit
+#systemctl restart docker
+
+apt-get install qemu binfmt-support qemu-user-static -y  # Install the qemu packages 
 
 # https://github.com/multiarch/qemu-user-static
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
