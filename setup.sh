@@ -40,7 +40,7 @@ reset=`tput sgr0`
 #apt-get install -y nvidia-container-toolkit
 #systemctl restart docker
 
-apt-get install qemu binfmt-support qemu-user-static -y  # Install the qemu packages 
+sudo apt-get install qemu binfmt-support qemu-user-static -y  # Install the qemu packages 
 
 # https://github.com/multiarch/qemu-user-static
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
