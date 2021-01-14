@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Build the Docker image
+      run: |
+        cd $GITHUB_WORKSPACE
+        docker --version
+        ./setup.sh
+        ./build.sh
