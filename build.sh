@@ -48,8 +48,10 @@ fi
 
 echo $(pwd) $ROS_DISTRO
 # Build 
-cd jetson-containers
+#cd jetson-containers
 #echo "sh ./scripts/docker_build.sh ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION Dockerfile.ros.$ROS_DISTRO --build-arg BASE_IMAGE=$BASE_IMAGE"
 #sh ./scripts/docker_build.sh ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION Dockerfile.ros.$ROS_DISTRO --build-arg BASE_IMAGE=$BASE_IMAGE
 
-docker build -f Dockerfile.ros.$ROS_DISTRO -t ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION --build-arg BASE_IMAGE=$BASE_IMAGE .
+#docker build -f Dockerfile.ros.$ROS_DISTRO -t ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION --build-arg BASE_IMAGE=$BASE_IMAGE .
+
+docker build -t test .
