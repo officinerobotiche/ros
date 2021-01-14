@@ -1,4 +1,5 @@
-FROM mdegans/tegra-opencv:jp-r32.4.2-cv-4.3.0
+
+FROM mdegans/tegra-opencv:jp-r32.4.4-cv-4.5.0
 
 # install tzdata avoiding interactive prompts
 RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && \
