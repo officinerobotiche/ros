@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 jobs:
 
-  setup:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -18,12 +18,12 @@ jobs:
         docker --version
         ./docker_setup.sh
 
-  build:
-    needs: setup
-    runs-on: ubuntu-latest
+    - name: Build image
+      run: |
+        cd $GITHUB_WORKSPACE
+        ./docker_build.sh $GITHUB_REPOSITORY
 
-    steps:
-    - name: Build the Docker image
+    - name: Publish Docker images
       run: |
         cd $GITHUB_WORKSPACE
         docker images

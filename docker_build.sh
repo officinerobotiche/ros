@@ -30,6 +30,8 @@ green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
+GITHUB_REPOSITORY=$1
+echo $GITHUB_REPOSITORY
 # Load variables
 source ./utils/variables.sh
 
