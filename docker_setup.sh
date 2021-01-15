@@ -56,4 +56,4 @@ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
 # Build 
 echo " - ${bold}Update $IMAGE with ${green}fixed cerificates${reset}"
-docker build -t fix_certificates:$L4T_VERSION --build-arg BASE_IMAGE=$BASE_IMAGE .
+docker build -t fix_certificates:$L4T_VERSION -f utils/Dockerfile --build-arg BASE_IMAGE=$BASE_IMAGE .
