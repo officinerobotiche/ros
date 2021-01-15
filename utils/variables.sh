@@ -37,7 +37,7 @@ L4T_VERSION="r32.4.4"
 OPENCV="4.5.0"
 
 # https://github.com/mdegans/nano_build_opencv
-BASE_IMAGE="$IMAGE:jp-$L4T_VERSION-cv-$OPENCV"
+BASE_IMAGE="$BASE_IMAGE_NAME:jp-$L4T_VERSION-cv-$OPENCV"
 
 TAG_IMAGE="ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION-cv-$OPENCV"
 
