@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2020, Raffaello Bonghi <raffaello@rnext.it>
+# Copyright (C) 2021, Raffaello Bonghi <raffaello@rnext.it>
 # All rights reserved
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -24,20 +24,36 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 bold=`tput bold`
 red=`tput setaf 1`
 green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
-sudo apt-get install qemu binfmt-support qemu-user-static -y  # Install the qemu packages 
+source ./utils/variables.sh
+
+## Configuration
+echo "-------------------"
+echo "L4T: $L4T_VERSION"
+echo "Open-CV: $OPENCV"
+echo "ROS Distro: $ROS_DISTRO"
+echo "Base image: $BASE_IMAGE"
+echo "Output image: $TAG_IMAGE"
+echo "-------------------"
+
+# Install the qemu packages
+sudo apt-get install qemu binfmt-support qemu-user-static -y
 
 # https://github.com/multiarch/qemu-user-static
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
-# Test architecture
+# - Test architecture
 # docker run --rm -t arm64v8/ubuntu uname -m
 # aarch64
-# NVIDIA Jetson
+# - NVIDIA Jetson
 # docker run --rm -t nvcr.io/nvidia/l4t-base:r32.4.4 uname -m
+# aarch64
+
+# Build 
+echo " - ${bold}Update $IMAGE with ${green}fixed cerificates${reset}"
+docker build -t fix_certificates:$L4T_VERSION --build-arg BASE_IMAGE=$BASE_IMAGE .

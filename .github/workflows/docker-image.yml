@@ -14,9 +14,13 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Build the Docker image
+    - name: Setup Docker image
       run: |
         cd $GITHUB_WORKSPACE
         docker --version
-        ./setup.sh
-        ./build.sh
+        ./docker_setup.sh
+
+    - name: Build the Docker image
+      run: |
+        cd $GITHUB_WORKSPACE
+        docker images

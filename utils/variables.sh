@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2020, Raffaello Bonghi <raffaello@rnext.it>
+# Copyright (C) 2021, Raffaello Bonghi <raffaello@rnext.it>
 # All rights reserved
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -24,34 +24,26 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 bold=`tput bold`
 red=`tput setaf 1`
 green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
+
+BASE_IMAGE_NAME="mdegans/tegra-opencv"
 ROS_DISTRO="foxy"
 L4T_VERSION="r32.4.4"
+OPENCV="4.5.0"
 
 # https://github.com/mdegans/nano_build_opencv
-BASE_IMAGE="mdegans/tegra-opencv:latest"
+BASE_IMAGE="$IMAGE:jp-$L4T_VERSION-cv-$OPENCV"
 
-if [ ! -d jetson-containers ] ; then
-    echo " - ${bold}Download ${green}jetson-containers${reset}"
-    git clone https://github.com/dusty-nv/jetson-containers.git
-else
-    cd jetson-containers
-    git pull
-    cd ..
-fi
+TAG_IMAGE="ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION-cv-$OPENCV"
 
-echo $(pwd) $ROS_DISTRO
-# Build 
-#cd jetson-containers
-#echo "sh ./scripts/docker_build.sh ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION Dockerfile.ros.$ROS_DISTRO --build-arg BASE_IMAGE=$BASE_IMAGE"
-#sh ./scripts/docker_build.sh ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION Dockerfile.ros.$ROS_DISTRO --build-arg BASE_IMAGE=$BASE_IMAGE
-
-#docker build -f Dockerfile.ros.$ROS_DISTRO -t ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION --build-arg BASE_IMAGE=$BASE_IMAGE .
-
-docker build -t test .
+# Export variables
+export $ROS_DISTRO
+export $L4T_VERSION
+export $OPENCV
+export $BASE_IMAGE
+export $TAG_IMAGE
