@@ -21,7 +21,7 @@ jobs:
     - name: Build image
       run: |
         cd $GITHUB_WORKSPACE
-        ./docker_build.sh $GITHUB_REPOSITORY
+        ./docker_build.sh $GITHUB_REPOSITORY $GITHUB_ACTOR
 
     - name: Publish Docker images
       run: |

@@ -31,7 +31,10 @@ yellow=`tput setaf 3`
 reset=`tput sgr0`
 
 GITHUB_REPOSITORY=$1
-echo $GITHUB_REPOSITORY
+echo "GITHUB_REPOSITORY=$GITHUB_REPOSITORY"
+GITHUB_ACTOR=$2
+echo "GITHUB_ACTOR=$GITHUB_ACTOR"
+
 # Load variables
 source ./utils/variables.sh
 
