@@ -30,13 +30,16 @@ green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
+# Load variables
+source ./utils/variables.sh
+
+# https://docs.github.com/en/free-pro-team@latest/actions/reference/environment-variables
 GITHUB_REPOSITORY=$1
 echo "GITHUB_REPOSITORY=$GITHUB_REPOSITORY"
 GITHUB_ACTOR=$2
 echo "GITHUB_ACTOR=$GITHUB_ACTOR"
 
-# Load variables
-source ./utils/variables.sh
+TAG_IMAGE="ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION-cv-$OPENCV"
 
 if [ ! -d jetson-containers ] ; then
     echo " - ${bold}Download ${green}jetson-containers${reset}"
@@ -54,6 +57,7 @@ echo "L4T: $L4T_VERSION"
 echo "Open-CV: $OPENCV"
 echo "ROS Distro: $ROS_DISTRO"
 echo "Base image: $BASE_IMAGE"
+echo "-------------------"
 echo "Output image: $TAG_IMAGE"
 echo "-------------------"
 
