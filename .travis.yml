@@ -13,4 +13,6 @@ script:
 # prepare qemu
 - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 # build image
+- nproc --all
+
 - docker build -f utils/Dockerfile -t test .

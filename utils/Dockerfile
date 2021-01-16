@@ -33,3 +33,4 @@ RUN mv /etc/apt/sources.list.d/nvidia-l4t-apt-source.list /etc/apt/ && \
     rm -rf /var/lib/apt/lists/* && \
     mv /etc/apt/nvidia-l4t-apt-source.list /etc/apt/sources.list.d
 
+RUN nproc --all
