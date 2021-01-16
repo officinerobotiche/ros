@@ -71,10 +71,11 @@ if [[ "$ROS_PKG" == "ros_core" ]]; then
         cd ..
     fi
     # Build 
-    cd jetson-containers
     echo " - ${bold}Update $BASE_IMAGE_NAME with ${green}fixed cerificates${reset}"
     docker build -t fix_certificates:$L4T_VERSION -f utils/Dockerfile --build-arg BASE_IMAGE=$BASE_IMAGE .
+    
     echo " - ${bold}Build ${green}$TAG_IMAGE${reset}"
+    cd jetson-containers
     docker build -f Dockerfile.ros.$ROS_DISTRO -t $TAG_IMAGE --build-arg BASE_IMAGE=fix_certificates:$L4T_VERSION --build-arg ROS_PKG=$ROS_PKG .
 elif [[ "$ROS_PKG" == "ros_base" ]]; then
     echo " - ${bold}Build ${green}$TAG_IMAGE${reset}"
