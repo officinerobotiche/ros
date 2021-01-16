@@ -18,6 +18,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE
         docker --version
+        docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
         ./docker_setup.sh
 
     - name: Build image
@@ -28,7 +29,6 @@ jobs:
     - name: Publish Docker images
       run: |
         cd $GITHUB_WORKSPACE
-        docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
         ./docker_push.sh ros_core $GITHUB_REPOSITORY
 
   build_base:
@@ -43,6 +43,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE
         docker --version
+        docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
         ./docker_setup.sh
 
     - name: Build image
@@ -53,5 +54,4 @@ jobs:
     - name: Publish Docker images
       run: |
         cd $GITHUB_WORKSPACE
-        docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
         ./docker_push.sh ros_base $GITHUB_REPOSITORY

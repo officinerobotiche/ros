@@ -56,6 +56,10 @@ cd jetson-containers
 ros_pkg_name=$(echo "$ROS_PKG" | tr '_' '-')
 TAG_IMAGE="$GITHUB_REPOSITORY:$ROS_DISTRO-$ros_pkg_name-l4t-$L4T_VERSION-cv-$OPENCV"
 
+## Build Docker image with
+if [[ "$ROS_PKG" == "ros_base" ]]; then
+    BASE_IMAGE="$GITHUB_REPOSITORY:$ROS_DISTRO-ros-core-l4t-$L4T_VERSION-cv-$OPENCV"
+fi
 ## Configuration
 echo "-------------------"
 echo "L4T: $L4T_VERSION"
@@ -76,8 +80,7 @@ if [[ "$ROS_PKG" == "ros_core" ]]; then
     docker build -f Dockerfile.ros.$ROS_DISTRO -t $TAG_IMAGE --build-arg BASE_IMAGE=fix_certificates:$L4T_VERSION --build-arg ROS_PKG=$ROS_PKG .
 elif [[ "$ROS_PKG" == "ros_base" ]]; then
     echo " - ${bold}Build ${green}$TAG_IMAGE${reset}"
-    ROS_BASE_IMAGE="$GITHUB_REPOSITORY:$ROS_DISTRO-ros-core-l4t-$L4T_VERSION-cv-$OPENCV"
-    docker build -t $TAG_IMAGE -f jetson_ros/Dockerfile.$ROS_DISTRO.base --build-arg BASE_IMAGE=$ROS_BASE_IMAGE .
+    docker build -t $TAG_IMAGE -f jetson_ros/Dockerfile.$ROS_DISTRO.base --build-arg BASE_IMAGE=$BASE_IMAGE .
 fi
 
 exit 0
