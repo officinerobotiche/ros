@@ -24,22 +24,7 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-bold=`tput bold`
-red=`tput setaf 1`
-green=`tput setaf 2`
-yellow=`tput setaf 3`
-reset=`tput sgr0`
-
-source ./utils/variables.sh
-
-## Configuration
-echo "-------------------"
-echo "L4T: $L4T_VERSION"
-echo "Open-CV: $OPENCV"
-echo "ROS Distro: $ROS_DISTRO"
-echo "Base image: $BASE_IMAGE"
-echo "Output image: $TAG_IMAGE"
-echo "-------------------"
+set -ex
 
 # Install the qemu packages
 sudo apt-get install qemu binfmt-support qemu-user-static -y
@@ -53,7 +38,3 @@ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 # - NVIDIA Jetson
 # docker run --rm -t nvcr.io/nvidia/l4t-base:r32.4.4 uname -m
 # aarch64
-
-# Build 
-echo " - ${bold}Update $IMAGE with ${green}fixed cerificates${reset}"
-docker build -t fix_certificates:$L4T_VERSION -f utils/Dockerfile --build-arg BASE_IMAGE=$BASE_IMAGE .

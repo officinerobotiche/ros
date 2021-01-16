@@ -1,11 +1,13 @@
 name: Docker Image CI
+# https://docs.github.com/en/actions/learn-github-actions/managing-complex-workflows
 
 on:
   push:
     branches: [ master ]
+
 jobs:
 
-  build:
+  build_core:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,9 +23,35 @@ jobs:
     - name: Build image
       run: |
         cd $GITHUB_WORKSPACE
-        ./docker_build.sh $GITHUB_REPOSITORY $GITHUB_ACTOR
+        ./docker_build.sh ros_core $GITHUB_REPOSITORY
 
     - name: Publish Docker images
       run: |
         cd $GITHUB_WORKSPACE
-        docker images
+        docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
+        ./docker_push.sh ros_core $GITHUB_REPOSITORY
+
+  build_base:
+    needs: build_core
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup Docker image
+      run: |
+        cd $GITHUB_WORKSPACE
+        docker --version
+        ./docker_setup.sh
+
+    - name: Build image
+      run: |
+        cd $GITHUB_WORKSPACE
+        ./docker_build.sh ros_base $GITHUB_REPOSITORY
+
+    - name: Publish Docker images
+      run: |
+        cd $GITHUB_WORKSPACE
+        docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
+        ./docker_push.sh ros_base $GITHUB_REPOSITORY

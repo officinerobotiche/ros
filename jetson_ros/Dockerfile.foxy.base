@@ -23,14 +23,32 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# https://hub.docker.com/r/mdegans/tegra-opencv
-ARG BASE_IMAGE=mdegans/tegra-opencv:jp-r32.4.4-cv-4.5.0
+ARG BASE_IMAGE=officinerobotiche/ros:foxy-ros-core-l4t-r32.4.4-cv-4.5.0
 FROM ${BASE_IMAGE}
 
-RUN mv /etc/apt/sources.list.d/nvidia-l4t-apt-source.list /etc/apt/ && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates && \
-    rm -rf /var/lib/apt/lists/* && \
-    mv /etc/apt/nvidia-l4t-apt-source.list /etc/apt/sources.list.d
+ARG ROS_PKG=ros_base
+ENV ROS_DISTRO=foxy
+ENV ROS_ROOT=/opt/ros/${ROS_DISTRO}
 
-RUN nproc --all
+RUN cd ${ROS_ROOT} && \
+    rosinstall_generator --deps --rosdistro ${ROS_DISTRO} ${ROS_PKG} launch_xml launch_yaml example_interfaces > ros2.${ROS_DISTRO}.${ROS_PKG}.rosinstall && \
+    cat ros2.${ROS_DISTRO}.${ROS_PKG}.rosinstall && \
+    vcs import src < ros2.${ROS_DISTRO}.${ROS_PKG}.rosinstall
+
+# install dependencies using rosdep
+RUN cd ${ROS_ROOT} && \
+    apt-get update && \
+    rosdep update && \
+    rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y && \
+    rm -rf /var/lib/apt/lists/*
+
+# build it!
+RUN cd ${ROS_ROOT} && colcon build --symlink-install
+
+RUN sed -i \
+    's/source "\/opt\/ros\/$ROS_DISTRO\/setup.bash"/source "${ROS_ROOT}\/install\/setup.bash"/g' \
+    /ros_entrypoint.sh && \
+    cat /ros_entrypoint.sh
+
+ENTRYPOINT ["/ros_entrypoint.sh"]
+CMD ["bash"]
