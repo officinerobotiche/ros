@@ -35,6 +35,7 @@ export BASE_IMAGE_NAME="mdegans/tegra-opencv"
 export ROS_DISTRO="foxy"
 export L4T_VERSION="r32.4.4"
 export OPENCV="4.5.0"
+export ROS_PKG=ros_core
 
 # https://github.com/mdegans/nano_build_opencv
 export BASE_IMAGE="$BASE_IMAGE_NAME:jp-$L4T_VERSION-cv-$OPENCV"

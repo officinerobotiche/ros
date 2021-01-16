@@ -39,7 +39,7 @@ echo "GITHUB_REPOSITORY=$GITHUB_REPOSITORY"
 GITHUB_ACTOR=$2
 echo "GITHUB_ACTOR=$GITHUB_ACTOR"
 
-TAG_IMAGE="ros:$ROS_DISTRO-ros-base-l4t-$L4T_VERSION-cv-$OPENCV"
+TAG_IMAGE="ros:$ROS_DISTRO-ros-core-l4t-$L4T_VERSION-cv-$OPENCV"
 
 if [ ! -d jetson-containers ] ; then
     echo " - ${bold}Download ${green}jetson-containers${reset}"
@@ -57,6 +57,7 @@ echo "L4T: $L4T_VERSION"
 echo "Open-CV: $OPENCV"
 echo "ROS Distro: $ROS_DISTRO"
 echo "Base image: $BASE_IMAGE"
+echo "ROS Pkg: $ROS_PKG"
 echo "-------------------"
 echo "Output image: $TAG_IMAGE"
 echo "-------------------"
@@ -64,4 +65,4 @@ echo "-------------------"
 echo " - ${bold}Build ${green}$TAG_IMAGE${reset}"
 ## Build Docker image with 
 cd jetson-containers
-docker build -f Dockerfile.ros.$ROS_DISTRO -t $TAG_IMAGE --build-arg BASE_IMAGE=fix_certificates:$L4T_VERSION .
+docker build -f Dockerfile.ros.$ROS_DISTRO -t $TAG_IMAGE --build-arg BASE_IMAGE=fix_certificates:$L4T_VERSION --build-arg ROS_PKG=$ROS_PKG .

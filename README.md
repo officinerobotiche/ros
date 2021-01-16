@@ -1,2 +1,2 @@
-# nanosaur-builder
-Docker builder 
+# ros
+Docker builder for NVIDIA Jetson
