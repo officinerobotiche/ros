@@ -41,18 +41,6 @@ if [ -z "$GITHUB_REPOSITORY" ] ; then
       GITHUB_REPOSITORY="officinerobotice/ros"
 fi
 
-if [ ! -d jetson-containers ] ; then
-    echo " - ${bold}Download ${green}jetson-containers${reset}"
-    git clone https://github.com/dusty-nv/jetson-containers.git
-else
-    echo " - ${bold}Update ${green}jetson-containers${reset}"
-    cd jetson-containers
-    git pull
-    cd ..
-fi
-
-cd jetson-containers
-
 ros_pkg_name=$(echo "$ROS_PKG" | tr '_' '-')
 TAG_IMAGE="$GITHUB_REPOSITORY:$ROS_DISTRO-$ros_pkg_name-l4t-$L4T_VERSION-cv-$OPENCV"
 
@@ -73,7 +61,17 @@ echo "-------------------"
 
 ## Build Docker image with
 if [[ "$ROS_PKG" == "ros_core" ]]; then
+    if [ ! -d jetson-containers ] ; then
+        echo " - ${bold}Download ${green}jetson-containers${reset}"
+        git clone https://github.com/dusty-nv/jetson-containers.git
+    else
+        echo " - ${bold}Update ${green}jetson-containers${reset}"
+        cd jetson-containers
+        git pull
+        cd ..
+    fi
     # Build 
+    cd jetson-containers
     echo " - ${bold}Update $BASE_IMAGE_NAME with ${green}fixed cerificates${reset}"
     docker build -t fix_certificates:$L4T_VERSION -f utils/Dockerfile --build-arg BASE_IMAGE=$BASE_IMAGE .
     echo " - ${bold}Build ${green}$TAG_IMAGE${reset}"
