@@ -32,5 +32,3 @@ RUN mv /etc/apt/sources.list.d/nvidia-l4t-apt-source.list /etc/apt/ && \
     apt-get install -y --no-install-recommends ca-certificates && \
     rm -rf /var/lib/apt/lists/* && \
     mv /etc/apt/nvidia-l4t-apt-source.list /etc/apt/sources.list.d
-
-RUN nproc --all

@@ -33,7 +33,7 @@ reset=`tput sgr0`
 # Load variables
 source ./utils/variables.sh
 
-ROS_PKGS=$1
+ROS_PKG=$1
 
 # https://docs.github.com/en/free-pro-team@latest/actions/reference/environment-variables
 GITHUB_REPOSITORY=$2
