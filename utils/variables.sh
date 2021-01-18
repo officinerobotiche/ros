@@ -31,5 +31,4 @@ export L4T_VERSION="r32.4.4"
 export OPENCV="4.4.0"
 
 # https://github.com/mdegans/nano_build_opencv
-export BASE_IMAGE="$BASE_IMAGE_NAME:$L4T_VERSION_cv${OPENCV}_latest"
-
+export BASE_IMAGE="${BASE_IMAGE_NAME}:${L4T_VERSION}_cv${OPENCV}_latest"
