@@ -1,6 +1,8 @@
 # ros
 Docker builder for NVIDIA Jetson [Docker hub](https://hub.docker.com/r/officinerobotiche/ros)
 
+![Docker Image CI](https://github.com/officinerobotiche/ros/workflows/Docker%20Image%20CI/badge.svg)
+
 How to use on a desktop PC
 
 ```bash

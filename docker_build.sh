@@ -82,4 +82,3 @@ elif [[ "$ROS_PKG" == "ros_base" ]]; then
     docker build -t $TAG_IMAGE -f jetson_ros/Dockerfile.$ROS_DISTRO.base --build-arg BASE_IMAGE=$BASE_IMAGE .
 fi
 
-exit 0

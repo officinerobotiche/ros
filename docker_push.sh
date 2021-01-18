@@ -55,5 +55,3 @@ if [[ "$ROS_PKG" == "ros_base" ]]; then
     docker tag $TAG_IMAGE "$GITHUB_REPOSITORY:latest"
     docker push "$GITHUB_REPOSITORY:latest"
 fi
-
-exit 0
